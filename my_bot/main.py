@@ -96,16 +96,29 @@ import database as db
 import keyboards as kb
 
 import os
-from dotenv import load_dotenv
+from aiogram import Router, types
+from aiogram.filters import Command
+from config import TOKEN, ADMIN_ID
 
-load_dotenv()
+router = Router()
 
-TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = int(os.getenv("ADMIN_ID"))
+# from dotenv import load_dotenv
 
-if message.from_user.id == ADMIN_ID:
-    await message.answer("Hello, my boss")
+# load_dotenv()
 
+# TOKEN = os.getenv("BOT_TOKEN")
+# ADMIN_ID = int(os.getenv("ADMIN_ID"))
+
+# if message.from_user.id == ADMIN_ID:
+#         await message.answer("Hello, my boss")
+
+@router.message(Command("start"))
+async def start_handler(message: types.Message):
+    # Այս հատվածը պետք է լինի ֆունկցիայի ՆԵՐՍՈՒՄ (տեղաշարժված աջ)
+    if message.from_user.id == ADMIN_ID:
+        await message.answer("Hello, my boss")
+    else:
+        await message.answer("Hello! You are not the boss.")
 
 dp = Dispatcher()
 
