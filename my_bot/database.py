@@ -4,14 +4,14 @@ def db_start():
     conn = sqlite3.connect('shop.db')
     cursor = conn.cursor()
     
-    # Կատեգորիաների աղյուսակ
+    
     cursor.execute("CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY, name TEXT)")
     
-    # Ապրանքների աղյուսակ
+    
     cursor.execute("""CREATE TABLE IF NOT EXISTS items 
                    (id INTEGER PRIMARY KEY, category_id INTEGER, name TEXT, desc TEXT, price REAL)""")
     
-    # Պատվերների աղյուսակ (Այստեղ կպահվեն հաճախորդի տվյալները մեկ տողում)
+    
     cursor.execute("""CREATE TABLE IF NOT EXISTS orders 
                    (user_id INTEGER PRIMARY KEY, 
                     username TEXT, 
@@ -20,7 +20,7 @@ def db_start():
                     phone TEXT, 
                     address TEXT)""")
     
-    # Նախնական տվյալների լրացում
+    
     cursor.execute("SELECT count(*) FROM categories")
     if cursor.fetchone()[0] == 0:
         cursor.executemany("INSERT INTO categories (name) VALUES (?)", [('Electronics',), ('Clothes',), ('Accessories',)])
@@ -40,9 +40,9 @@ def db_start():
 def update_order(user_id, username, column, value):
     conn = sqlite3.connect('shop.db')
     cursor = conn.cursor()
-    # INSERT OR IGNORE-ը ստեղծում է տողը միայն մեկ անգամ, եթե այն չկա
+    
     cursor.execute("INSERT OR IGNORE INTO orders (user_id, username) VALUES (?, ?)", (user_id, username))
-    # UPDATE-ը թարմացնում է կոնկրետ սյունակը նույն տողի մեջ
+    
     cursor.execute(f"UPDATE orders SET {column} = ? WHERE user_id = ?", (value, user_id))
     conn.commit()
     conn.close()
@@ -66,7 +66,7 @@ def get_items(cat_id):
 def get_last_order(user_id):
     conn = sqlite3.connect('shop.db')
     cursor = conn.cursor()
-    # Այստեղ օգտագործում ենք JOIN, որպեսզի միացնենք պատվերը և ապրանքի տվյալները
+   
     query = """
     SELECT items.name, items.price, orders.full_name, orders.phone, orders.address 
     FROM orders 
