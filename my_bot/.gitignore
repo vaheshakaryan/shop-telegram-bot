@@ -1,18 +1,15 @@
-# Գաղտնի տվյալներ
 .env
 
-# Python-ի ժամանակավոր ֆայլեր
 __pycache__/
 *.py[cod]
 
-# Վիրտուալ միջավայր
 venv/
 env/
 
-# Տվյալների բազա (SQLite)
+(SQLite)
 *.db
 
-# Օպերացիոն համակարգի ֆայլեր
+
 .DS_Store
 Thumbs.db
 config.py
